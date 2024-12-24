@@ -1,9 +1,16 @@
+import importlib.metadata
 import os
 
 from flask import Flask
+from flask_smorest import Api
 
 app = Flask(__name__)
 
+app.config["API_TITLE"] = "My API"
+app.config["API_VERSION"] = importlib.metadata.version('poc-flask-smorest')
+app.config["OPENAPI_VERSION"] = "3.0.2"
+
+api = Api(app)
 
 @app.route('/')
 def hello_world():  # put application's code here
