@@ -4,19 +4,18 @@ import os
 from flask import Flask
 from flask_smorest import Api
 
+from src.routes.authors import authors_blp
+
 app = Flask(__name__)
 
 app.config["API_TITLE"] = "My API"
-app.config["API_VERSION"] = importlib.metadata.version('poc-flask-smorest')
+app.config["API_VERSION"] = importlib.metadata.version("poc-flask-smorest")
 app.config["OPENAPI_VERSION"] = "3.0.2"
 
 api = Api(app)
-
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+api.register_blueprint(authors_blp)
 
 
 def main():
-    debug = os.environ.get('DEBUG', False)
-    app.run(host='0.0.0.0', port=5000, debug=debug)
+    debug = os.environ.get("DEBUG", False)
+    app.run(host="0.0.0.0", port=5000, debug=debug)

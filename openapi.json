@@ -1,0 +1,355 @@
+{
+  "paths": {
+    "/authors/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListAuthorsResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "Authors"
+        ]
+      },
+      "post": {
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_CONTENT"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAuthorResponseDTO"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAuthorRequestDTO"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Authors"
+        ]
+      }
+    },
+    "/authors/{author_id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAuthorResponseDTO"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "Authors"
+        ]
+      },
+      "parameters": [
+        {
+          "in": "path",
+          "name": "author_id",
+          "required": true,
+          "schema": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "delete": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteAuthorResponseDTO"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "Authors"
+        ]
+      },
+      "put": {
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_CONTENT"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAuthorResponseDTO"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAuthorRequestDTO"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Authors"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "My API",
+    "version": "0.1.0"
+  },
+  "tags": [
+    {
+      "name": "authors",
+      "description": "Operations on authors"
+    }
+  ],
+  "openapi": "3.0.2",
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "Error code"
+          },
+          "status": {
+            "type": "string",
+            "description": "Error name"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "errors": {
+            "type": "object",
+            "description": "Errors",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "PaginationMetadata": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "total_pages": {
+            "type": "integer"
+          },
+          "first_page": {
+            "type": "integer"
+          },
+          "last_page": {
+            "type": "integer"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "previous_page": {
+            "type": "integer"
+          },
+          "next_page": {
+            "type": "integer"
+          }
+        }
+      },
+      "ListAuthorsResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true,
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateAuthorRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateAuthorResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "GetAuthorResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true,
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2022-01-01T00:00:00"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "DeleteAuthorResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true,
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2022-01-01T00:00:00"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateAuthorRequestDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateAuthorResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true,
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true,
+            "example": "2022-01-01T00:00:00"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "responses": {
+      "DEFAULT_ERROR": {
+        "description": "Default error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "UNPROCESSABLE_CONTENT": {
+        "description": "Unprocessable Content",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
