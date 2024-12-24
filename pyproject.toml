@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "poc-flask-smorest"
+version = "0.1.0"
+description = "POC with flask-smorest"
+authors = ["Pedro Dalvy <pedrodalvy@outlook.com>"]
+readme = "README.md"
+
+packages = [{ include = "src" }]
+
+[tool.poetry.scripts]
+start = "src.app:main"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+flask = "^3.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
