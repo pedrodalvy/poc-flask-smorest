@@ -143,6 +143,78 @@
           "Authors"
         ]
       }
+    },
+    "/posts/": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "author_id",
+            "schema": {
+              "type": "integer",
+              "example": "1"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_CONTENT"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ListPostsResponseDTO"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "tags": [
+          "Posts"
+        ]
+      },
+      "post": {
+        "responses": {
+          "422": {
+            "$ref": "#/components/responses/UNPROCESSABLE_CONTENT"
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePostResponseDTO"
+                }
+              }
+            }
+          },
+          "default": {
+            "$ref": "#/components/responses/DEFAULT_ERROR"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostRequestDTO"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Posts"
+        ]
+      }
     }
   },
   "info": {
@@ -151,8 +223,12 @@
   },
   "tags": [
     {
-      "name": "authors",
+      "name": "Authors",
       "description": "Operations on authors"
+    },
+    {
+      "name": "Posts",
+      "description": "Operations on posts"
     }
   ],
   "openapi": "3.0.2",
@@ -326,6 +402,83 @@
         },
         "required": [
           "name"
+        ]
+      },
+      "AuthorResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
+      },
+      "ListPostsResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          },
+          "title": {
+            "type": "string",
+            "example": "My first post"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is my first post"
+          },
+          "author": {
+            "$ref": "#/components/schemas/AuthorResponseDTO"
+          }
+        },
+        "required": [
+          "author",
+          "content",
+          "id",
+          "title"
+        ]
+      },
+      "CreatePostRequestDTO": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "My first post"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is my first post"
+          },
+          "author_id": {
+            "type": "integer",
+            "example": "1"
+          }
+        },
+        "required": [
+          "author_id",
+          "content",
+          "title"
+        ]
+      },
+      "CreatePostResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1"
+          }
+        },
+        "required": [
+          "id"
         ]
       }
     },
