@@ -1,35 +1,27 @@
 from typing import List, Dict
 
 from src.entities.author import Author
-
-authors_list: List[Author] = []
+from src.repositories import authors_repository
 
 
 def list_authors() -> List[Author]:
-    return authors_list
+    return authors_repository.list_authors()
 
 
 def get_author(author_id: int) -> Author:
-    author = next((author for author in authors_list if author.id == author_id), None)
-    return author
+    return authors_repository.get_author(author_id)
 
 
 def delete_author(author_id: int) -> Author:
-    author = next((author for author in authors_list if author.id == author_id), None)
-    authors_list.remove(author)
-    return author
+    return authors_repository.delete_author(author_id)
 
 
 def update_author(author_id: int, dto: Dict[str, str]) -> Author:
-    author = next((author for author in authors_list if author.id == author_id), None)
+    author = authors_repository.get_author(author_id)
     author.name = dto.get("name")
     return author
 
 
 def create_author(dto: Dict[str, str]) -> Author:
-    author_id = len(authors_list) + 1
-    author_name = dto.get("name")
-
-    author = Author(name=author_name, id=author_id)
-    authors_list.append(author)
-    return author
+    author = Author(name=dto.get("name"))
+    return authors_repository.create_author(author)
